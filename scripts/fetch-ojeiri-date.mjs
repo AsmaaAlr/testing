@@ -7,35 +7,45 @@ function cleanText(text) {
   return text.replace(/\s+/g, " ").trim();
 }
 
-function extractDatesFromText(text) {
+function extractMainDates(text) {
   const cleaned = cleanText(text);
 
-  // Example Gregorian pattern:
-  // Saturday 20 Dec 2025
   const gregorianRegex =
-    /\b(?:Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)\s+\d{1,2}\s+[A-Z][a-z]{2,}\s+\d{4}\b/;
+    /\b(?:Sunday|Monday|Tuesday|Wednesday|Thursday|Friday)\s+\d{1,2}\s+[A-Z][a-z]{2,}\s+\d{4}\b|\b(?:Saturday)\s+\d{1,2}\s+[A-Z][a-z]{2,}\s+\d{4}\b/;
 
-  // Example Hijri pattern:
-  // 29 Jumada Alakhirah 1447
-  // 1 Ramadan 1447
   const hijriRegex =
-    /\b\d{1,2}\s+[A-Za-z][A-Za-z' -]{2,}\s+\d{4}\b/g;
+    /\b\d{1,2}\s+(?:Muharram|Safar|Rabi(?:'|’)?\s*Al[- ]?Awwal|Rabi(?:'|’)?\s*Al[- ]?Thani|Jumada(?:h)?\s*Al[- ]?Awwal|Jumada(?:h)?\s*Al[- ]?Akhirah|Jumada\s+Alakhirah|Rajab|Shaaban|Shaban|Ramadan|Shawwal|Dhul[- ]?Qadah|Dhul[- ]?Hijjah)\s+\d{4}\b/i;
 
   const gregorianMatch = cleaned.match(gregorianRegex);
-  const hijriMatches = cleaned.match(hijriRegex) || [];
+  const hijriMatch = cleaned.match(hijriRegex);
 
-  let gregorian = gregorianMatch ? gregorianMatch[0] : "";
-  let hijri = "";
+  return {
+    gregorian: gregorianMatch ? gregorianMatch[0] : "",
+    hijri: hijriMatch ? hijriMatch[0] : ""
+  };
+}
 
-  // Pick a likely Hijri candidate by excluding obvious Gregorian-like matches
-  for (const candidate of hijriMatches) {
-    if (!/[A-Z][a-z]{2,}\s+\d{4}$/.test(candidate) || /Jumada|Muharram|Safar|Rabi|Rajab|Shaaban|Ramadan|Shawwal|Dhul|Hijjah|Thul/i.test(candidate)) {
-      hijri = candidate;
-      break;
-    }
+function extractPrayerTimesFromText(text) {
+  const cleaned = cleanText(text);
+
+  const prayers = [
+    ["fajr", "Fajr"],
+    ["sunrise", "Sunrise"],
+    ["dhuhr", "Dhur|Dhuhr"],
+    ["asr", "Asr"],
+    ["maghrib", "Magrib|Maghrib"],
+    ["isha", "Isha"]
+  ];
+
+  const result = {};
+
+  for (const [key, label] of prayers) {
+    const regex = new RegExp(`(?:${label})\\s*(\\d{1,2}:\\d{2}\\s?(?:AM|PM))`, "i");
+    const match = cleaned.match(regex);
+    result[key] = match ? match[1].toUpperCase() : "";
   }
 
-  return { gregorian, hijri };
+  return result;
 }
 
 async function main() {
@@ -53,27 +63,9 @@ async function main() {
   const $ = cheerio.load(html);
 
   const bodyText = cleanText($("body").text());
-  let { gregorian, hijri } = extractDatesFromText(bodyText);
 
-  // Extra fallback: scan likely calendar containers if needed
-  if (!hijri) {
-    const candidates = [];
-    $("div, section, article, span, p, h1, h2, h3").each((_, el) => {
-      const text = cleanText($(el).text());
-      if (text.length > 5 && text.length < 200) {
-        candidates.push(text);
-      }
-    });
-
-    for (const text of candidates) {
-      const found = extractDatesFromText(text);
-      if (found.hijri) {
-        hijri = found.hijri;
-        if (!gregorian && found.gregorian) gregorian = found.gregorian;
-        break;
-      }
-    }
-  }
+  const { gregorian, hijri } = extractMainDates(bodyText);
+  const prayer_times = extractPrayerTimesFromText(bodyText);
 
   if (!hijri) {
     throw new Error("Could not extract Hijri date from Alojeiri page.");
@@ -82,6 +74,7 @@ async function main() {
   const data = {
     hijri,
     gregorian,
+    prayer_times,
     source: URL,
     updated_at: new Date().toISOString()
   };
