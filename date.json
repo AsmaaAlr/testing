@@ -1,14 +1,14 @@
 {
-  "hijri": "27 Ramadan 1447",
-  "gregorian": "Monday 16 Mar 2026",
+  "hijri": "28 Ramadan 1447",
+  "gregorian": "Tuesday 17 Mar 2026",
   "prayer_times": {
-    "fajr": "04:38 AM",
+    "fajr": "04:37 AM",
     "sunrise": "05:57 AM",
     "dhuhr": "11:57 AM",
     "asr": "03:22 PM",
     "maghrib": "05:57 PM",
-    "isha": "07:13 PM"
+    "isha": "07:14 PM"
   },
   "source": "https://www.alojeiri.com/en/ojeiri-calendar",
-  "updated_at": "2026-03-15T21:37:45.555Z"
+  "updated_at": "2026-03-16T21:51:35.573Z"
 }
