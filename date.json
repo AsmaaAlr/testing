@@ -1,14 +1,14 @@
 {
-  "hijri": "17 Shawwal 1447",
-  "gregorian": "Sunday 05 Apr 2026",
+  "hijri": "18 Shawwal 1447",
+  "gregorian": "Monday 06 Apr 2026",
   "prayer_times": {
-    "fajr": "04:13 AM",
-    "sunrise": "05:34 AM",
+    "fajr": "04:12 AM",
+    "sunrise": "05:33 AM",
     "dhuhr": "11:51 AM",
     "asr": "03:23 PM",
-    "maghrib": "06:08 PM",
+    "maghrib": "06:09 PM",
     "isha": "07:27 PM"
   },
   "source": "https://www.alojeiri.com/en/ojeiri-calendar",
-  "updated_at": "2026-04-04T21:42:16.771Z"
+  "updated_at": "2026-04-05T21:43:43.500Z"
 }
