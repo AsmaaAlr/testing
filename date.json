@@ -1,14 +1,14 @@
 {
-  "hijri": "21 Shawwal 1447",
-  "gregorian": "Thursday 09 Apr 2026",
+  "hijri": "22 Shawwal 1447",
+  "gregorian": "Friday 10 Apr 2026",
   "prayer_times": {
-    "fajr": "04:08 AM",
-    "sunrise": "05:29 AM",
-    "dhuhr": "11:50 AM",
+    "fajr": "04:07 AM",
+    "sunrise": "05:28 AM",
+    "dhuhr": "11:49 AM",
     "asr": "03:23 PM",
     "maghrib": "06:11 PM",
     "isha": "07:30 PM"
   },
   "source": "https://www.alojeiri.com/en/ojeiri-calendar",
-  "updated_at": "2026-04-08T21:55:52.576Z"
+  "updated_at": "2026-04-09T21:54:29.342Z"
 }
