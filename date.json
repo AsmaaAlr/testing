@@ -1,14 +1,14 @@
 {
-  "hijri": "29 Shawwal 1447",
-  "gregorian": "Friday 17 Apr 2026",
+  "hijri": "1 Muharram 1448",
+  "gregorian": "Tuesday 16 Jun 2026",
   "prayer_times": {
-    "fajr": "03:58 AM",
-    "sunrise": "05:20 AM",
-    "dhuhr": "11:48 AM",
-    "asr": "03:22 PM",
-    "maghrib": "06:15 PM",
-    "isha": "07:36 PM"
+    "fajr": "03:13 AM",
+    "sunrise": "04:48 AM",
+    "dhuhr": "11:49 AM",
+    "asr": "03:23 PM",
+    "maghrib": "06:49 PM",
+    "isha": "08:21 PM"
   },
   "source": "https://www.alojeiri.com/en/ojeiri-calendar",
-  "updated_at": "2026-04-16T21:55:33.573Z"
+  "updated_at": "2026-06-15T23:07:11.310Z"
 }
